@@ -35,11 +35,4 @@ public class DentalHistoryController {
         return ResponseEntity.noContent().build();
     }
 
-    //DELETE
-    @DeleteMapping(value = "/patients/{patientId}/dental-history")
-    public ResponseEntity<Object> deleteDentalHistory(@PathVariable Long patientId) {
-        service.deleteDentalHistory(patientId);
-        return ResponseEntity.noContent().build();
-    }
-
 }

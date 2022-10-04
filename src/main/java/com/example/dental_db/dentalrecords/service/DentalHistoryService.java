@@ -9,6 +9,5 @@ public interface DentalHistoryService {
     DentalHistory saveDentalHistory(Long patientID, DentalHistory dentalHistory);
 
     void updateDentalHistory(Long patientID, DentalHistory dentalHistory);
-
-    void deleteDentalHistory(Long patientID);
+ 
 }

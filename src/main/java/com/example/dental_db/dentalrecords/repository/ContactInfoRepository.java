@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ContactInfoRepository extends JpaRepository<ContactInfo, Long> {
-    ContactInfo findContactInfoByPatientPatientId(long patientId);
+    ContactInfo findContactInfoByContactId(Long contactId);
 }

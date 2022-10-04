@@ -136,7 +136,7 @@ const Patient = (props) => {
                                     <Form.Label>First Name</Form.Label>
                                     <Form.Control aria-required="true" type="text" placeholder="First Name"
                                                   value={firstName}
-                                                  onChange={(e) => (setFirstName(e.target.value))}/>
+                                                  onChange={(e) => (setFirstName(e.taerget.value))}/>
                                 </Form.Group>
                                 <Form.Group className="name mb-3">
                                     <Form.Label>Last Name</Form.Label>

@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 public class ContactServiceImpl implements ContactService {
 
@@ -18,14 +20,14 @@ public class ContactServiceImpl implements ContactService {
     @Autowired
     private PatientService patientService;
 
-    public void checkPatient(Long patientId) {
-        patientService.getPatient(patientId);
-    }
-
     @Override
-    public ContactInfo getContactInfo(Long patientID) {
-        checkPatient(patientID);
-        return contactInfoRepository.findContactInfoByPatientPatientId(patientID);
+    public List<ContactInfo> getAllContactInfo(Long patientId) {
+        Patient patient = patientService.getPatient(patientId);
+        return  patient.getContactInfo();
+    }
+    @Override
+    public ContactInfo getContactInfo(Long patientID, Long contactId) {
+        return contactInfoRepository.findContactInfoByContactId(contactId);
     }
 
     @Override
@@ -38,24 +40,24 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public void updateContactInfo(Long patientID, ContactInfo contactInfo) {
-        ContactInfo dbContactInfo = getContactInfo(patientID);
+        ContactInfo dbContactInfo = getContactInfo(patientID, contactInfo.getContactId());
         if (dbContactInfo == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient's Contact Not Found");
-        dbContactInfo.setCity(contactInfo.getCity());
-        dbContactInfo.setBaranggay(contactInfo.getBaranggay());
-        dbContactInfo.setRegion(contactInfo.getRegion());
+        dbContactInfo.setAddress(contactInfo.getAddress());
         dbContactInfo.setEmailAddress(contactInfo.getEmailAddress());
         dbContactInfo.setMobileNumber(contactInfo.getMobileNumber());
         contactInfoRepository.save(dbContactInfo);
     }
 
     @Override
-    public void deleteContactInfo(Long patientID) {
+    public void deleteContactInfo(Long patientID, Long contactId) {
         Patient patient = patientService.getPatient(patientID);
-        ContactInfo contactInfo = patient.getContactInfo();
-        if (contactInfo == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient's Contact Not Found");
+        ContactInfo dbContactInfo = getContactInfo(patientID, contactId);
+        if (dbContactInfo == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient's Contact Not Found");
         //Abandon link
         patient.setContactInfo(null);
-        contactInfoRepository.delete(contactInfo);
+        contactInfoRepository.delete(dbContactInfo);
     }
+
+
 }

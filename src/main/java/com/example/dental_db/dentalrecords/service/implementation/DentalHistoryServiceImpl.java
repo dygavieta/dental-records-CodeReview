@@ -1,6 +1,5 @@
 package com.example.dental_db.dentalrecords.service.implementation;
 
-import com.example.dental_db.dentalrecords.entity.ContactInfo;
 import com.example.dental_db.dentalrecords.entity.DentalHistory;
 import com.example.dental_db.dentalrecords.entity.Patient;
 import com.example.dental_db.dentalrecords.repository.DentalHistoryRepository;
@@ -41,13 +40,5 @@ public class DentalHistoryServiceImpl implements DentalHistoryService {
         dbDentalHistory.setDescription(dentalHistory.getDescription());
         dentalHistoryRepository.save(dbDentalHistory);
     }
-
-    @Override
-    public void deleteDentalHistory(Long patientId) {
-        Patient patient = patientService.getPatient(patientId);
-        DentalHistory dbDentalHistory = getDentalHistory(patientId);
-        //Abandon link
-        patient.setDentalHistory(null);
-        dentalHistoryRepository.delete(dbDentalHistory);
-    }
+ 
 }

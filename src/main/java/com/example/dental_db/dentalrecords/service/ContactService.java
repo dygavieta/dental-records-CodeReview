@@ -7,12 +7,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface ContactService {
-    ContactInfo getContactInfo(Long id);
+    ContactInfo getContactInfo(Long id, Long contactId);
 
     ContactInfo saveContactInfo(Long patientID, ContactInfo contactInfo);
 
     void updateContactInfo(Long patientID, ContactInfo contactInfo);
 
-    void deleteContactInfo(Long patientID);
+    void deleteContactInfo(Long patientID, Long contactId);
 
+    List<ContactInfo> getAllContactInfo(Long patientId);
 }
